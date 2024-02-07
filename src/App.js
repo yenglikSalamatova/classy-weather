@@ -40,11 +40,20 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchWeather("Almaty");
+    this.setState({ search: localStorage.getItem("search") || "" });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.search && this.state.search !== prevState.search) {
+      this.fetchWeather(this.state.search);
+
+      localStorage.setItem("search", this.state.search);
+    }
   }
 
   async fetchWeather(search) {
     try {
+      if (this.state.search.length < 2) return;
       this.setState({ isLoading: true });
       // 1) Getting location (geocoding)
       const geoRes = await fetch(
@@ -90,9 +99,9 @@ class App extends React.Component {
             value={this.state.search}
             onChange={(e) => this.setState({ search: e.target.value })}
           />
-          <button onClick={() => this.fetchWeather(this.state.search)}>
+          {/* <button onClick={() => this.fetchWeather(this.state.search)}>
             Choose
-          </button>
+          </button> */}
         </div>
 
         {this.state.isLoading && <p>...Loading</p>}
