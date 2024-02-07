@@ -10,7 +10,7 @@ body {
   padding:0;
   margin: 0;
   font-family: "Montserrat", sans-serif;
-  background: linear-gradient(300deg,deepskyblue,#2350d6);
+  background: linear-gradient(300deg,rgb(0, 204, 255),#138bee);
   background-size: 120% 120%;
   animation: gradient-animation 12s ease infinite;
   height: 100vh;
@@ -158,7 +158,7 @@ code {
 }
 
 .daily_weather_temp {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 

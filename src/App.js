@@ -3,15 +3,15 @@ import React from "react";
 function getWeatherIcon(wmoCode) {
   const icons = new Map([
     [[0], "☀️"],
-    [[1], "🌤"],
+    [[1], "⛅"],
     [[2], "⛅️"],
     [[3], "☁️"],
-    [[45, 48], "🌫"],
-    [[51, 56, 61, 66, 80], "🌦"],
-    [[53, 55, 63, 65, 57, 67, 81, 82], "🌧"],
-    [[71, 73, 75, 77, 85, 86], "🌨"],
-    [[95], "🌩"],
-    [[96, 99], "⛈"],
+    [[45, 48], "🌫️"],
+    [[51, 56, 61, 66, 80], "🌦️"],
+    [[53, 55, 63, 65, 57, 67, 81, 82], "🌧️"],
+    [[71, 73, 75, 77, 85, 86], "🌨️"],
+    [[95], "🌩️"],
+    [[96, 99], "⛈️"],
   ]);
   const arr = [...icons.keys()].find((key) => key.includes(wmoCode));
   if (!arr) return "NOT FOUND";
@@ -39,12 +39,16 @@ class App extends React.Component {
     this.fetchWeather = this.fetchWeather.bind(this);
   }
 
-  async fetchWeather(location) {
+  componentDidMount() {
+    this.fetchWeather("Almaty");
+  }
+
+  async fetchWeather(search) {
     try {
       this.setState({ isLoading: true });
       // 1) Getting location (geocoding)
       const geoRes = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${this.state.search}`
+        `https://geocoding-api.open-meteo.com/v1/search?name=${search}`
       );
       const geoData = await geoRes.json();
       console.log(geoData);
@@ -86,7 +90,9 @@ class App extends React.Component {
             value={this.state.search}
             onChange={(e) => this.setState({ search: e.target.value })}
           />
-          <button onClick={() => this.fetchWeather()}>Choose</button>
+          <button onClick={() => this.fetchWeather(this.state.search)}>
+            Choose
+          </button>
         </div>
 
         {this.state.isLoading && <p>...Loading</p>}
